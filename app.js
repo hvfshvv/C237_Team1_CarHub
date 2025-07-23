@@ -16,7 +16,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-// --------------------TODO----------------------------
 const connection = mysql.createConnection({
     host: 'web80n.h.filess.io',
     user: 'CarHub_stationbet',
