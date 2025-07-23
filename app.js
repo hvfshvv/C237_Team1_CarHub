@@ -122,3 +122,116 @@ app.post('/login', (req, res) => {
 app.get('/browseCars', checkAuthenticated, (req, res) => {
     connection.query('SELECT * FROM cars', (error, results) => {
         if (error) throw error;
+        res.render('browseCars', { user: req.session.user, cars: results });
+    });
+});
+
+app.post('/add-to-cart/:id', checkAuthenticated, (req, res) => {
+    const carId = parseInt(req.params.id);
+    const quantity = parseInt(req.body.quantity) || 1;
+    connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            const car = results[0];
+            if (!req.session.cart) req.session.cart = [];
+            const existingItem = req.session.cart.find(item => item.carId === carId);
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                req.session.cart.push({
+                    carId: car.carId,
+                    carModel: car.carModel,
+                    price: car.price,
+                    quantity,
+                    image: car.image
+                });
+            }
+            res.redirect('/cart');
+        } else {
+            res.status(404).send("Car not found");
+        }
+    });
+});
+
+app.get('/cart', checkAuthenticated, (req, res) => {
+    const cart = req.session.cart || [];
+    res.render('cart', { cart, user: req.session.user });
+});
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+});
+
+app.get('/car/:id', checkAuthenticated, (req, res) => {
+    const carId = req.params.id;
+    connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.render('car', { car: results[0], user: req.session.user });
+        } else {
+            res.status(404).send('Car not found');
+        }
+    });
+});
+
+app.get('/addCar', checkAuthenticated, checkAdmin, (req, res) => {
+    res.render('addCar', { user: req.session.user });
+});
+
+app.post('/addCar', upload.single('image'), (req, res) => {
+    const { model, year, price } = req.body;
+    const image = req.file ? req.file.filename : null;
+    const sql = 'INSERT INTO cars (carModel, year, price, image) VALUES (?, ?, ?, ?)';
+    connection.query(sql, [model, year, price, image], (error, results) => {
+        if (error) {
+            console.error("Error adding car:", error);
+            res.status(500).send('Error adding car');
+        } else {
+            res.redirect('/inventory');
+        }
+    });
+});
+
+app.get('/updateCar/:id', checkAuthenticated, checkAdmin, (req, res) => {
+    const carId = req.params.id;
+    connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.render('updateCar', { car: results[0] });
+        } else {
+            res.status(404).send('Car not found');
+        }
+    });
+});
+
+app.post('/updateCar/:id', upload.single('image'), (req, res) => {
+    const carId = req.params.id;
+    const { model, year, price } = req.body;
+    let image = req.body.currentImage;
+    if (req.file) image = req.file.filename;
+    const sql = 'UPDATE cars SET carModel = ?, year = ?, price = ?, image = ? WHERE carId = ?';
+    connection.query(sql, [model, year, price, image, carId], (error, results) => {
+        if (error) {
+            console.error("Error updating car:", error);
+            res.status(500).send('Error updating car');
+        } else {
+            res.redirect('/inventory');
+        }
+    });
+});
+
+app.get('/deleteCar/:id', (req, res) => {
+    const carId = req.params.id;
+    connection.query('DELETE FROM cars WHERE carId = ?', [carId], (error, results) => {
+        if (error) {
+            console.error("Error deleting car:", error);
+            res.status(500).send('Error deleting car');
+        } else {
+            res.redirect('/inventory');
+        }
+    });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`CarHub running on port ${PORT}`));
