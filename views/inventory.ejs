@@ -74,6 +74,17 @@
       row.style.display = text.includes(filter) ? '' : 'none';
     });
   });
+
+app.get('/inventory', (req, res) => {
+  connection.query('SELECT * FROM cars', (err, results) => {
+    if (err) {
+      console.error("SQL error:", err);
+      return res.status(500).send("Database error");
+    }
+    res.send(results); // just to check if the data comes through
+  });
+});
+
   </script>
 </body>
 </html>
