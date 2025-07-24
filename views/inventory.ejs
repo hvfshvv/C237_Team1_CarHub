@@ -81,7 +81,7 @@ app.get('/inventory', (req, res) => {
       console.error("SQL error:", err);
       return res.status(500).send("Database error");
     }
-    res.send(results); // just to check if the data comes through
+    res.send(results); //debug
   });
 });
 
