@@ -207,6 +207,12 @@ app.get('/updateCar/:id', checkAuthenticated, checkAdmin, (req, res) => {
 app.post('/updateCar/:id', upload.single('image'), (req, res) => {
     const carId = req.params.id;
     const { model, year, price } = req.body;
+
+     if (!model || !year || !price || isNaN(year) || isNaN(price)) {
+        req.flash('error', 'All fields must be filled out correctly.');
+        return res.redirect(`/updateCar/${carId}`);
+    }
+    
     let image = req.body.currentImage;
     if (req.file) image = req.file.filename;
     const sql = 'UPDATE cars SET carModel = ?, year = ?, price = ?, image = ? WHERE carId = ?';
