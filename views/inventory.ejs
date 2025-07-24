@@ -70,10 +70,10 @@
     var filter = this.value.toLowerCase();
     var rows = document.querySelectorAll('#carsTable tbody tr');
     rows.forEach(function(row) {
-      var carModel = row.querySelector('td').innerText.toLowerCase();
-      row.style.display = carModel.includes(filter) ? '' : 'none';
+      var text = row.innerText.toLowerCase();
+      row.style.display = text.includes(filter) ? '' : 'none';
     });
   });
-</script>
+  </script>
 </body>
 </html>
