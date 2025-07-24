@@ -6,6 +6,7 @@
 <body>
     <h1>Login to CarHub</h1>
 
+    <!-- Error Messages -->
     <% if (errors && errors.length > 0) { %>
         <ul style="color: red;">
             <% errors.forEach(err => { %>
@@ -14,10 +15,16 @@
         </ul>
     <% } %>
 
+    <!-- Success Messages -->
     <% if (messages && messages.length > 0) { %>
-        <p style="color: green;"><%= messages %></p>
+        <ul style="color: green;">
+            <% messages.forEach(msg => { %>
+                <li><%= msg %></li>
+            <% }); %>
+        </ul>
     <% } %>
 
+    <!-- Login Form -->
     <form method="POST" action="/login">
         <label>Email:</label><br>
         <input type="email" name="email" required><br><br>
