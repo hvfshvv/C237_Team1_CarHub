@@ -35,8 +35,8 @@
   <div class="container mt-4">
     <h2 class="text-center mb-4">Update car</h2>
     
-    <% if (product) { %>
-      <form action="/updatecar/<%= CarHub.carId %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
+    <% if (CarHub) { %>
+      <form action="/updateCar/<%= CarHub.carId %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
         
         <div class="mb-3">
           <label for="carModel" class="form-label">carModel</label>
@@ -45,22 +45,17 @@
 
         <div class="mb-3">
           <label for="manufacture Year" class="form-label">manufacture Year</label>
-          <input type="text" class="form-control" id="manufacture Year" name="manufacture Year" value="<%= CarHub.manufacture Year %>" required>
+          <input type="text" class="form-control" id="manufacture Year" name="manufacture Year" value="<%= CarHub["manufacture Year"] %>" required>
         </div>
 
         <div class="mb-3">
           <label for="quantity" class="form-label">Quantity</label>
-          <input type="number" class="form-control" id="quantity" name="quantity" min="0" step="1" value="<%= product.quantity %>" required>
+          <input type="number" class="form-control" id="quantity" name="quantity" min="0" step="1" value="<%= CarHub.quantity %>" required>
         </div>
 
         <div class="mb-3">
           <label for="price" class="form-label">Price</label>
           <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" value="<%= CarHub.price %>" required>
-        </div>
-
-        <div class="mb-3">
-          <label for="status" class="form-label">status</label>
-          <input type="text" class="form-control" id="status" name="status" value="<%= CarHub.status %>" required>
         </div>
 
         <div class="mb-3">
