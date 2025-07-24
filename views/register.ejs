@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - CarHub</title>
+</head>
+<body>
+    <h1>Register for CarHub</h1>
+
+    <% if (messages && messages.length > 0) { %>
+        <ul style="color: red;">
+            <% messages.forEach(msg => { %>
+                <li><%= msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <form method="POST" action="/register">
+        <label>Username:</label><br>
+        <input type="text" name="username" value="<%= formData?.username || '' %>" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" value="<%= formData?.email || '' %>" required><br><br>
+
+        <label>Password:</label><br>
+        <input type="password" name="password" required><br><br>
+
+        <label>Address:</label><br>
+        <input type="text" name="address" value="<%= formData?.address || '' %>" required><br><br>
+
+        <label>Contact:</label><br>
+        <input type="text" name="contact" value="<%= formData?.contact || '' %>" required><br><br>
+
+        <label>Role:</label><br>
+        <select name="role" required>
+            <option value="">Select role</option>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select><br><br>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <p>Already have an account? <a href="/login">Login</a></p>
+</body>
+</html>
