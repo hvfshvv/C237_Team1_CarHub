@@ -13,7 +13,7 @@
 <body>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">CarHub</a>
+            <a class="navbar-brand" href="/product">Car Hub</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -21,15 +21,9 @@
                 <ul class="navbar-nav">
                     <% if (user.role==="admin" ) { %>
                         <li class="nav-item">
-                            <a class="nav-link" href="/inventory">Inventory</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/addCar">Add New Car</a>
+                            <a class="nav-link" href="/addCar">Add Car</a>
                         </li>
                         <% } else { %>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/browseCars">Browse Cars</a>
-                            </li>
                             <% } %>
                                 <li class="nav-item">
                                     <a class="nav-link" href="/logout">Logout</a>
@@ -51,15 +45,15 @@
                     <p><strong>Car Model:</strong>
                         <%= car.carModel %>
                     </p>
-                    <p><strong>Year:</strong>
+                    <p><strong>Year Manufactured:</strong>
                         <%= car.Year %>
                     </p>
                     <p><strong>Price:</strong> $<%= car.price %>
                     </p>
-                    <p><strong>description:</strong>
+                    <p><strong>Description:</strong>
                         <%= car.description %>
                     </p>
-                     <p><strong>status:</strong>
+                     <p><strong>Status:</strong>
                         <%= car.status %>
                     </p>
                 </div>
@@ -75,9 +69,20 @@
                         <% if (user.role==="admin" ) { %>
                             <a href="/inventory" class="btn btn-secondary">Back to Inventory</a>
                             <% } else { %>
-                                <a href="/browseCars" class="btn btn-secondary">Back to Car List</a>
-                                <% } %>
+                                <a href="/product" class="btn btn-secondary">Back to Car List</a>
+                    
+                                <% if (!isInCart) { %>
+                                    <form action="/add-to-cart/<%= car.carId %>" method="POST" class="d-inline">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-primary">Add to Cart</button>
+                                    </form>
+                                    <% } else { %>
+                                        <button class="btn btn-secondary" disabled>This car is already in your cart</button>
+                                        <% } %>
+                    
+                                            <% } %>
                     </div>
+
     </div>
 </body>
 

@@ -4,6 +4,9 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const multer = require('multer');
 const app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Set up multer for file uploads
 const storage = multer.diskStorage({
@@ -161,25 +164,28 @@ app.get('/browseCars', checkAuthenticated, (req, res) => {
 
 app.post('/add-to-cart/:id', checkAuthenticated, (req, res) => {
     const carId = parseInt(req.params.id);
-    const quantity = parseInt(req.body.quantity) || 1;
+
     connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
         if (error) throw error;
+
         if (results.length > 0) {
-            const cars = results[0];
+            const car = results[0];
             if (!req.session.cart) req.session.cart = [];
+
             const existingItem = req.session.cart.find(item => item.carId === carId);
             if (existingItem) {
-                existingItem.quantity += quantity;
-            } else {
-                req.session.cart.push({
-                    carId: cars.carId,
-                    Year: cars.Year,
-                    carModel: cars.carModel,
-                    price: cars.price,
-                    quantity: cars.quantity,
-                    image: cars.image
-                });
+                return res.redirect('/cart?duplicate=true');
             }
+
+            req.session.cart.push({
+                carId: car.carId,
+                carModel: car.carModel,
+                Year: car.Year,
+                price: car.price,
+                description: car.description,
+                image: car.image
+            });
+
             res.redirect('/cart');
         } else {
             res.status(404).send("Car not found");
@@ -187,10 +193,22 @@ app.post('/add-to-cart/:id', checkAuthenticated, (req, res) => {
     });
 });
 
+
 app.get('/cart', checkAuthenticated, (req, res) => {
     const cart = req.session.cart || [];
     res.render('cart', { cart, user: req.session.user });
 });
+
+app.post('/cart/delete', (req, res) => {
+  const carIdToDelete = req.body.carId;
+
+  if (req.session.cart) {
+    req.session.cart = req.session.cart.filter(item => item.carId !== parseInt(carIdToDelete));
+  }
+
+  res.redirect('/cart');
+});
+
 
 app.get('/logout', (req, res) => {
     req.session.destroy();
@@ -198,16 +216,22 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/car/:id', checkAuthenticated, (req, res) => {
-    const carId = req.params.id;
+    const carId = parseInt(req.params.id);
     connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
-            res.render('car', { car: results[0], user: req.session.user });
+            // Get the user cart from session, or empty array if none
+            const cart = req.session.cart || [];
+            // check for duplicates
+            const isInCart = cart.some(item => item.carId === carId);
+
+            res.render('car', { car: results[0], user: req.session.user, isInCart });
         } else {
             res.status(404).send('Car not found');
         }
     });
 });
+
 
 app.get('/addCar', checkAuthenticated, checkAdmin, (req, res) => {
     res.render('addCar', { user: req.session.user });

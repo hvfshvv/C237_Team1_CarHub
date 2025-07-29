@@ -11,17 +11,14 @@
   <!-- Navbar -->
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">CarHub App</a>
+      <a class="navbar-brand" href="/inventory">Car Hub</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="/inventory">Inventory</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/addCar">Add New car</a>
+            <a class="nav-link" href="/addCar">Add Car</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
@@ -39,18 +36,18 @@
       <form action="/updateCars/<%= car.carId %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
         
         <div class="mb-3">
-          <label for="carModel" class="form-label">carModel</label>
+          <label for="carModel" class="form-label">Car Model</label>
           <input type="text" class="form-control" id="carModel" name="carModel" value="<%= car.carModel %>" required>
         </div>
 
         <div class="mb-3">
-          <label for="Year" class="form-label">Year</label>
+          <label for="Year" class="form-label">Year Manufactured</label>
           <input type="text" class="form-control" id="Year" name="Year" value="<%= car["Year"] %>" required>
         </div>
 
     
         <div class="mb-3">
-          <label for="price" class="form-label">Price</label>
+          <label for="price" class="form-label">Price (SGD)</label>
           <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" value="<%= car.price %>" required>
         </div>
 
@@ -60,7 +57,7 @@
         </div>
 
         <div class="mb-3">
-         <label for="status" class="form-label">Status</label>
+         <label for="status" class="form-label">Status (Available / Sold)</label>
          <input type="text" class="form-control" id="status" name="status" value="<%= car.status %>" required>
         </div>
 
