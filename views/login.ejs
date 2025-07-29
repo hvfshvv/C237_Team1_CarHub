@@ -2,39 +2,41 @@
 <html>
 <head>
     <title>Login - CarHub</title>
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <h1>Login to CarHub</h1>
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1>Login to CarHub</h1>
 
-    <!-- Error Messages -->
-    <% if (errors && errors.length > 0) { %>
-        <ul style="color: red;">
-            <% errors.forEach(err => { %>
-                <li><%= err %></li>
-            <% }); %>
-        </ul>
-    <% } %>
+            <% if (errors && errors.length > 0) { %>
+                <ul style="color: red;">
+                    <% errors.forEach(err => { %>
+                        <li><%= err %></li>
+                    <% }); %>
+                </ul>
+            <% } %>
 
-    <!-- Success Messages -->
-    <% if (messages && messages.length > 0) { %>
-        <ul style="color: green;">
-            <% messages.forEach(msg => { %>
-                <li><%= msg %></li>
-            <% }); %>
-        </ul>
-    <% } %>
+            <% if (messages && messages.length > 0) { %>
+                <ul style="color: green;">
+                    <% messages.forEach(msg => { %>
+                        <li><%= msg %></li>
+                    <% }); %>
+                </ul>
+            <% } %>
 
-    <!-- Login Form -->
-    <form method="POST" action="/login">
-        <label>Email:</label><br>
-        <input type="email" name="email" required><br><br>
+            <form method="POST" action="/login">
+                <label>Email:</label>
+                <input type="email" name="email" required>
 
-        <label>Password:</label><br>
-        <input type="password" name="password" required><br><br>
+                <label>Password:</label>
+                <input type="password" name="password" required>
 
-        <button type="submit">Login</button>
-    </form>
+                <button type="submit">Login</button>
+            </form>
 
-    <p>Don't have an account? <a href="/register">Register here</a></p>
+            <p>Don't have an account? <a href="/register">Register here</a></p>
+        </div>
+    </div>
 </body>
 </html>

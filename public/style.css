@@ -1,111 +1,231 @@
-/* CSS  */
-body{
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f4faff;
-    margin: 0;
-    padding: 0;
-    color: #333;
+/* === CSS === */
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-header,
-footer {
-    background-color: #0077b6;
-    color: white;
-    text-align: center;
-    padding: 1rem 0;
-}
-
-.container {
-    max-width: 1000px;
-    margin: 2rem auto;
-    padding: 1rem;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 1.5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Headings */
-h1,
 h2 {
-    color: #023e8a;
-    margin-bottom: 1rem;
+    color: #2c3e50;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 1.5rem;
 }
 
-/* Forms */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
+/* Form Styling */
+form .form-label {
+    font-weight: 600;
+    color: #34495e;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="email"],
-input[type="password"],
-textarea,
-select {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    width: 100%;
+form input.form-control,
+form select.form-control {
+    border: 1.5px solid #ced4da;
+    transition: border-color 0.3s ease;
 }
 
-textarea {
-    resize: vertical;
+form input.form-control:focus,
+form select.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
 /* Buttons */
-button,
-input[type="submit"] {
-    padding: 0.6rem 1rem;
-    border: none;
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    font-weight: 600;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.btn-secondary[disabled],
+.btn-danger[disabled] {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+/* Table Styling */
+table.table {
     border-radius: 6px;
-    background-color: #0096c7;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
-button:hover,
-input[type="submit"]:hover {
-    background-color: #0077b6;
+table.table thead {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #34495e;
 }
 
-/* Tables */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
+table.table tbody tr:hover {
+    background-color: #f1f8ff;
 }
 
-table,
-th,
-td {
-    border: 1px solid #ccc;
+/* Car Status */
+.status-available {
+    color: #28a745;
+    font-weight: 600;
 }
 
-th,
-td {
-    padding: 0.8rem;
-    text-align: left;
+.status-sold {
+    color: #dc3545;
+    font-weight: 600;
 }
 
-th {
-    background-color: #caf0f8;
-}
-
-/* Utility */
-.text-center {
-    text-align: center;
-}
-
-.mt-2 {
-    margin-top: 2rem;
-}
-
-img {
-    max-width: 150px;
-    height: auto;
+/* Image Styling */
+.img-thumbnail {
     border-radius: 8px;
+    border: 1px solid #dee2e6;
 }
+
+.img-fluid.rounded {
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Cart Totals */
+h4 {
+    margin-top: 20px;
+    font-weight: 700;
+    text-align: right;
+    color: #2c3e50;
+}
+
+/* Forms Container */
+.container form.mx-auto {
+    max-width: 500px;
+}
+
+/* Search Bar */
+#searchInput {
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+/*  layout styles for login & register */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .auth-box {
+        background-color: white;
+        padding: 30px 40px;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    .auth-box h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    
+    .auth-box form label {
+        font-weight: bold;
+    }
+    
+    .auth-box form input,
+    .auth-box form select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    .auth-box button {
+        width: 100%;
+        padding: 10px;
+        background-color: #0066cc;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    .auth-box button:hover {
+        background-color: #004d99;
+    }
+    
+    .auth-box p {
+        text-align: center;
+        margin-top: 15px;
+    }
+    
+    .auth-box a {
+        color: #0066cc;
+        text-decoration: none;
+    }
+    
+    .auth-box ul {
+        padding-left: 20px;
+    }
+    
+    /* === Index Page Styling === */
+    
+    .index-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 70px);
+        background: linear-gradient(to right, #9c9d9e, #e5e7eb);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        padding: 20px;
+    }
+    
+    .index-box {
+        background-color: white;
+        padding: 40px 50px;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .index-box h1 {
+        font-size: 2rem;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+    
+    .index-box p {
+        font-size: 1.1rem;
+        color: #444;
+    }
+    
+    .index-box a {
+        color: #007bff;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    
+    .index-box a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }

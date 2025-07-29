@@ -6,6 +6,8 @@ const multer = require('multer');
 const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+
 
 
 // Set up multer for file uploads
