@@ -109,8 +109,11 @@ app.post('/login', (req, res) => {
         if (err) throw err;
         if (results.length > 0) {
             req.session.user = results[0];
-            if (req.session.user.role === 'user') res.redirect('/browseCars');
-            else res.redirect('/inventory');
+            if (req.session.user.role === 'admin') {
+                res.redirect('/inventory');
+            } else {
+                res.redirect('/product');
+            }
         } else {
             req.flash('error', 'Invalid email or password.');
             res.redirect('/login');
@@ -234,6 +237,13 @@ app.get('/deleteCar/:id', (req, res) => {
         } else {
             res.redirect('/inventory');
         }
+    });
+});
+
+app.get('/product', checkAuthenticated, (req, res) => {
+    connection.query('SELECT * FROM cars', (error, results) => {
+        if (error) throw error;
+        res.render('product', { user: req.session.user, cars: results });
     });
 });
 
