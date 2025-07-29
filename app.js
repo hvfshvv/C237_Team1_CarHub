@@ -117,38 +117,34 @@ app.post('/login', (req, res) => {
         }
     });
 });
-app.get('/updateCars/:id', (req, res) => {
-  const carId = req.params.id;
-
-  db.query('SELECT * FROM cars WHERE carId = ?', [carId], (err, result) => {
-    if (err) {
-      console.error('Error fetching car for edit:', err);
-      return res.status(500).send('Internal Server Error');
-    }
-
-    if (result.length === 0) {
-      return res.status(404).send('Car not found');
-    }
-
-    // Render the edit form and pass the car details to EJS
-    res.render('updateCars', { car: result[0] });
-  });
+app.get('/updateCars/:id', checkAuthenticated, checkAdmin, (req, res) => {
+    const carId = req.params.id;
+    connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.render('updateCars', { car: results[0] });
+        } else {
+            res.status(404).send('Car not found');
+        }
+    });
 });
 
-app.post('/updateCars/:id', (req, res) => {
+app.post('/updateCars/:id', upload.single('image'), (req, res) => {
     const id = req.params.id;
-    const { carModel,Year, price, description, status } = req.body;
+    const { carModel, Year, price, description, status } = req.body;
 
-    db.query(
-        'UPDATE cars SET carModel = ?, Year = ?, price = ?, description = ?, status = ? WHERE carId = ?',
-        [carModel,Year, price, description, status, id],
+    let image = req.body.currentImage;
+    if (req.file) image = req.file.filename;
+
+    connection.query(
+        'UPDATE cars SET carModel = ?, Year = ?, price = ?, description = ?, status = ?, image = ? WHERE carId = ?',
+        [carModel, Year, price, description, status, image, id],
         (err, result) => {
             if (err) {
                 console.error('Error updating car:', err);
                 return res.status(500).send("Error updating car");
             }
-
-            res.redirect('/cars'); // or your item list page
+            res.redirect('/inventory');
         }
     );
 });
@@ -227,39 +223,7 @@ app.post('/addCar', upload.single('image'), (req, res) => {
         }
     });
 });
-app.get('/updateCars/:id', checkAuthenticated, checkAdmin, (req, res) => {
-    const carId = req.params.id;
-    connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
-        if (error) throw error;
-        if (results.length > 0) {
-            res.render('updateCars', { car: results[0] });
-        } else {
-            res.status(404).send('Car not found');
-        }
-    });
-});
 
-app.post('/updateCars/:id', upload.single('image'), (req, res) => {
-    const carId = req.params.id;
-    const { model, year, price } = req.body;
-
-     if (!model || !year || !price || isNaN(Year) || isNaN(price)) {
-        req.flash('error', 'All fields must be filled out correctly.');
-        return res.redirect(`/updateCars/${carId}`);
-    }
-    
-    let image = req.body.currentImage;
-    if (req.file) image = req.file.filename;
-    const sql = 'UPDATE cars SET carModel = ?, year = ?, price = ?, image = ? WHERE carId = ?';
-    connection.query(sql, [model, Year, price, image, carId], (error, results) => {
-        if (error) {
-            console.error("Error updating car:", error);
-            res.status(500).send('Error updating car');
-        } else {
-            res.redirect('/inventory');
-        }
-    });
-});
 
 app.get('/deleteCar/:id', (req, res) => {
     const carId = req.params.id;

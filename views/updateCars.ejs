@@ -35,7 +35,7 @@
   <div class="container mt-4">
     <h2 class="text-center mb-4">Update car</h2>
     
-    <% if (CarHub) { %>
+    <% if (car) { %>
       <form action="/updateCars/<%= car.carId %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
         
         <div class="mb-3">
@@ -48,19 +48,25 @@
           <input type="text" class="form-control" id="Year" name="Year" value="<%= car["Year"] %>" required>
         </div>
 
-        <div class="mb-3">
-          <label for="quantity" class="form-label">Quantity</label>
-          <input type="number" class="form-control" id="quantity" name="quantity" min="0" step="1" value="<%= car.quantity %>" required>
-        </div>
-
+    
         <div class="mb-3">
           <label for="price" class="form-label">Price</label>
           <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" value="<%= car.price %>" required>
         </div>
 
         <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <input type="text" class="form-control" id="description" name="description" value="<%= car.description %>" required>
+        </div>
+
+        <div class="mb-3">
+         <label for="status" class="form-label">Status</label>
+         <input type="text" class="form-control" id="status" name="status" value="<%= car.status %>" required>
+        </div>
+
+        <div class="mb-3">
           <label class="form-label">Current Image</label>
-          <input type="text" class="form-control" name="currentImage" value="<%= Car.image %>" readonly>
+          <input type="text" class="form-control" name="currentImage" value="<%= car.image %>" readonly>
           <img src="/images/<%= car.image %>" class="img-thumbnail mt-2" style="width: 150px;">
         </div>
 
