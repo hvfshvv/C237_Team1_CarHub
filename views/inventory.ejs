@@ -35,7 +35,7 @@
     <div class="mb-3">
     <input type="text" id="searchInput" class="form-control" placeholder="Search products...">
     </div>
-    <table class="table table-hover small text-center">
+  <table class="table table-hover small text-center" id="carsTable">
       <thead>
           <tr>
             <th width="100">Car Model</th>
@@ -75,17 +75,6 @@
       row.style.display = text.includes(filter) ? '' : 'none';
     });
   });
-
-app.get('/inventory', (req, res) => {
-  connection.query('SELECT * FROM cars', (err, results) => {
-    if (err) {
-      console.error("SQL error:", err);
-      return res.status(500).send("Database error");
-    }
-    res.send(results); //debug
-  });
-});
-
   </script>
 </body>
 </html>
