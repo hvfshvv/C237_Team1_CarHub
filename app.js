@@ -73,19 +73,10 @@ app.get('/', (req, res) => {
     res.render('index', { user: req.session.user });
 });
 
-app.get('/inventory', (req, res) => {
-    const sql = 'SELECT * FROM cars';
-    connection.query(sql, (err, results) => {
-        if (err) {
-            console.error("SQL error:", err);
-            return res.status(500).send("Database error");
-        }
-
-        // Assuming you have user session logic
-        res.render('inventory', {
-            user: req.session.user,
-            cars: results
-        });
+app.get('/inventory', checkAuthenticated, checkAdmin, (req, res) => {
+    connection.query('SELECT * FROM cars', (error, results) => {
+        if (error) throw error;
+        res.render('inventory', { cars: results, user: req.session.user });
     });
 });
 
