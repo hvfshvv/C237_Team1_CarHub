@@ -5,3 +5,6 @@ Finishing Routes and properly connecting the different pages and for each user
 Search Bar/Filter to be left for later after data reading is properly set up
 
 Log In Button not properly redirecting user to inventory/cars page
+
+29/7
+AddCar, Edit, UpdateCar, DeleteCar works
