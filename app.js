@@ -215,10 +215,10 @@ app.get('/addCar', checkAuthenticated, checkAdmin, (req, res) => {
 });
 
 app.post('/addCar', upload.single('image'), (req, res) => {
-    const { model, year, price } = req.body;
+    const { carModel, Year, description, status, price } = req.body;
     const image = req.file ? req.file.filename : null;
-    const sql = 'INSERT INTO cars (carModel,Year,description,status ,quantity, price, image) VALUES (?, ?, ?, ?, ?, ?)';
-    connection.query(sql, [model, year, price, image], (error, results) => {
+    const sql = 'INSERT INTO cars (carModel, Year, description, status, price, image) VALUES (?, ?, ?, ?, ?, ?)';
+    connection.query(sql, [carModel, Year, description, status, price, image], (error, results) => {
         if (error) {
             console.error("Error adding car:", error);
             res.status(500).send('Error adding car');
@@ -227,7 +227,6 @@ app.post('/addCar', upload.single('image'), (req, res) => {
         }
     });
 });
-
 app.get('/updateCars/:id', checkAuthenticated, checkAdmin, (req, res) => {
     const carId = req.params.id;
     connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
