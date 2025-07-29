@@ -137,11 +137,11 @@ app.get('/updateCars/:id', (req, res) => {
 
 app.post('/updateCars/:id', (req, res) => {
     const id = req.params.id;
-    const { carModel, manufactureYear, price, description, status } = req.body;
+    const { carModel,Year, price, description, status } = req.body;
 
     db.query(
-        'UPDATE cars SET carModel = ?, manufactureYear = ?, price = ?, description = ?, status = ? WHERE carId = ?',
-        [carModel, manufactureYear, price, description, status, id],
+        'UPDATE cars SET carModel = ?, Year = ?, price = ?, description = ?, status = ? WHERE carId = ?',
+        [carModel,Year, price, description, status, id],
         (err, result) => {
             if (err) {
                 console.error('Error updating car:', err);
@@ -166,18 +166,19 @@ app.post('/add-to-cart/:id', checkAuthenticated, (req, res) => {
     connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
-            const car = results[0];
+            const cars = results[0];
             if (!req.session.cart) req.session.cart = [];
             const existingItem = req.session.cart.find(item => item.carId === carId);
             if (existingItem) {
                 existingItem.quantity += quantity;
             } else {
                 req.session.cart.push({
-                    carId: car.carId,
-                    carModel: car.carModel,
-                    price: car.price,
-                    quantity,
-                    image: car.image
+                    carId: cars.carId,
+                    Year: cars.Year,
+                    carModel: cars.carModel,
+                    price: cars.price,
+                    quantity: cars.quantity,
+                    image: cars.image
                 });
             }
             res.redirect('/cart');
@@ -216,7 +217,7 @@ app.get('/addCar', checkAuthenticated, checkAdmin, (req, res) => {
 app.post('/addCar', upload.single('image'), (req, res) => {
     const { model, year, price } = req.body;
     const image = req.file ? req.file.filename : null;
-    const sql = 'INSERT INTO cars (carModel, year, price, image) VALUES (?, ?, ?, ?)';
+    const sql = 'INSERT INTO cars (carModel,Year,description,status ,quantity, price, image) VALUES (?, ?, ?, ?, ?, ?)';
     connection.query(sql, [model, year, price, image], (error, results) => {
         if (error) {
             console.error("Error adding car:", error);
@@ -227,31 +228,31 @@ app.post('/addCar', upload.single('image'), (req, res) => {
     });
 });
 
-app.get('/updateCar/:id', checkAuthenticated, checkAdmin, (req, res) => {
+app.get('/updateCars/:id', checkAuthenticated, checkAdmin, (req, res) => {
     const carId = req.params.id;
     connection.query('SELECT * FROM cars WHERE carId = ?', [carId], (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
-            res.render('updateCar', { car: results[0] });
+            res.render('updateCars', { car: results[0] });
         } else {
             res.status(404).send('Car not found');
         }
     });
 });
 
-app.post('/updateCar/:id', upload.single('image'), (req, res) => {
+app.post('/updateCars/:id', upload.single('image'), (req, res) => {
     const carId = req.params.id;
     const { model, year, price } = req.body;
 
-     if (!model || !year || !price || isNaN(year) || isNaN(price)) {
+     if (!model || !year || !price || isNaN(Year) || isNaN(price)) {
         req.flash('error', 'All fields must be filled out correctly.');
-        return res.redirect(`/updateCar/${carId}`);
+        return res.redirect(`/updateCars/${carId}`);
     }
     
     let image = req.body.currentImage;
     if (req.file) image = req.file.filename;
     const sql = 'UPDATE cars SET carModel = ?, year = ?, price = ?, image = ? WHERE carId = ?';
-    connection.query(sql, [model, year, price, image, carId], (error, results) => {
+    connection.query(sql, [model, Year, price, image, carId], (error, results) => {
         if (error) {
             console.error("Error updating car:", error);
             res.status(500).send('Error updating car');
