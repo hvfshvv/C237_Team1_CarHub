@@ -36,32 +36,32 @@
     <h2 class="text-center mb-4">Update car</h2>
     
     <% if (CarHub) { %>
-      <form action="/updateCar/<%= CarHub.carId %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
+      <form action="/updateCars/<%= car.carId %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
         
         <div class="mb-3">
           <label for="carModel" class="form-label">carModel</label>
-          <input type="text" class="form-control" id="carModel" name="carModel" value="<%= CarHub.carModel %>" required>
+          <input type="text" class="form-control" id="carModel" name="carModel" value="<%= car.carModel %>" required>
         </div>
 
         <div class="mb-3">
-          <label for="manufacture Year" class="form-label">manufacture Year</label>
-          <input type="text" class="form-control" id="manufacture Year" name="manufacture Year" value="<%= CarHub["manufacture Year"] %>" required>
+          <label for="Year" class="form-label">Year</label>
+          <input type="text" class="form-control" id="Year" name="Year" value="<%= car["Year"] %>" required>
         </div>
 
         <div class="mb-3">
           <label for="quantity" class="form-label">Quantity</label>
-          <input type="number" class="form-control" id="quantity" name="quantity" min="0" step="1" value="<%= CarHub.quantity %>" required>
+          <input type="number" class="form-control" id="quantity" name="quantity" min="0" step="1" value="<%= car.quantity %>" required>
         </div>
 
         <div class="mb-3">
           <label for="price" class="form-label">Price</label>
-          <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" value="<%= CarHub.price %>" required>
+          <input type="number" class="form-control" id="price" name="price" min="0" step="0.01" value="<%= car.price %>" required>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Current Image</label>
-          <input type="text" class="form-control" name="currentImage" value="<%= CarHub.image %>" readonly>
-          <img src="/images/<%= CarHub.image %>" class="img-thumbnail mt-2" style="width: 150px;">
+          <input type="text" class="form-control" name="currentImage" value="<%= Car.image %>" readonly>
+          <img src="/images/<%= car.image %>" class="img-thumbnail mt-2" style="width: 150px;">
         </div>
 
         <div class="mb-4">
