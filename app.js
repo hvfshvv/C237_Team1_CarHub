@@ -126,6 +126,41 @@ app.post('/login', (req, res) => {
         }
     });
 });
+app.get('/updateCars/:id', (req, res) => {
+  const carId = req.params.id;
+
+  db.query('SELECT * FROM cars WHERE carId = ?', [carId], (err, result) => {
+    if (err) {
+      console.error('Error fetching car for edit:', err);
+      return res.status(500).send('Internal Server Error');
+    }
+
+    if (result.length === 0) {
+      return res.status(404).send('Car not found');
+    }
+
+    // Render the edit form and pass the car details to EJS
+    res.render('updateCars', { car: result[0] });
+  });
+});
+
+app.post('/updateCars/:id', (req, res) => {
+    const id = req.params.id;
+    const { carModel, manufactureYear, price, description, status } = req.body;
+
+    db.query(
+        'UPDATE cars SET carModel = ?, manufactureYear = ?, price = ?, description = ?, status = ? WHERE carId = ?',
+        [carModel, manufactureYear, price, description, status, id],
+        (err, result) => {
+            if (err) {
+                console.error('Error updating car:', err);
+                return res.status(500).send("Error updating car");
+            }
+
+            res.redirect('/cars'); // or your item list page
+        }
+    );
+});
 
 app.get('/browseCars', checkAuthenticated, (req, res) => {
     connection.query('SELECT * FROM cars', (error, results) => {
