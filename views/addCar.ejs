@@ -53,8 +53,12 @@
       </div>
 
         <div class="mb-3">
-            <label for="status" class="form-label">Status (Available / Sold)</label>
-            <input type="text" class="form-control" id="status" name="status" required>
+          <label for="status" class="form-label">Status</label>
+           <select class="form-select" id="status" name="status" required>
+            <option value="" disabled selected>Select status</option>
+            <option value="Available">Available</option>
+            <option value="Sold">Sold</option>
+           </select>
         </div>
 
       <div class="mb-3">
