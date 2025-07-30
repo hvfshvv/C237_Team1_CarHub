@@ -64,12 +64,11 @@
 
         <div class="mb-3">
           <label for="status" class="form-label">Status</label>
-          <select class="form-select" id="status" name="status" required>
-            <option value="Available" <%= car.status === 'Available' ? 'selected' : '' %>>Available</option>
-            <option value="Sold" <%= car.status === 'Sold' ? 'selected' : '' %>>Sold</option>
+           <select class="form-select" id="status" name="status" required>
+              <option value="Available" <%= car.status === 'Available' ? 'selected' : '' %>>Available</option>
+              <option value="Sold" <%= car.status === 'Sold' ? 'selected' : '' %>>Sold</option>
           </select>
         </div>
-
 
         <div class="mb-3">
           <label class="form-label">Current Image</label>
