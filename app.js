@@ -157,12 +157,6 @@ app.post('/updateCars/:id', upload.single('image'), (req, res) => {
     );
 });
 
-app.get('/browseCars', checkAuthenticated, (req, res) => {
-    connection.query('SELECT * FROM cars', (error, results) => {
-        if (error) throw error;
-        res.render('browseCars', { user: req.session.user, cars: results });
-    });
-});
 
 app.post('/add-to-cart/:id', checkAuthenticated, (req, res) => {
     const carId = parseInt(req.params.id);
@@ -272,6 +266,7 @@ app.get('/product', checkAuthenticated, (req, res) => {
         res.render('product', { user: req.session.user, cars: results });
     });
 });
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`CarHub running on port ${PORT}`));

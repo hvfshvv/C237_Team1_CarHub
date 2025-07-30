@@ -23,6 +23,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>
             </li> 
+            <li class="nav-item">
+              <a class="nav-link" href="/viewusers">View Users</a>
+            </li> 
           </ul>
         </div>
       </div>
@@ -53,10 +56,10 @@
       <tbody>
         <% for(let i = 0; i < cars.length; i++) { %>
           <tr>
-            <td><a href="/car/<%= cars[i].carId %>"><%= cars[i].carModel %></a></td>
-            <td><img src="images/<%= cars[i].image %>" width="80%"></td>
+            <td><%a href="/car/<%= cars[i].carId %>"><%= cars[i].carModel %></a></td>
+            <td><%img src="images/<%= cars[i].image %>" width="80%"></td>
             <td><%= cars[i].Year %></td>
-            <td>$<%= cars[i].price.toFixed(2) %></td>
+            <td><%= cars[i].price.toFixed(2) %></td>
             <td><%= cars[i].description %></td>
             <td>
               <span class="<%= cars[i].status === 'Available' ? 'text-success' : 'text-danger' %>">
