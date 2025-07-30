@@ -18,17 +18,19 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link" href="/inventory">View Cars</a>
+              <a class="nav-link" href="/addCar">Add Car</a>
             </li> 
             <li class="nav-item">
-              <a class="nav-link" href="/addCar">Add Car</a>
+              <a class="nav-link" href="/inventory">View Cars</a>
+            </li> 
+            
+            <li class="nav-item">
+              <a class="nav-link" href="/viewusers">View Users</a>
             </li> 
             <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>
             </li> 
-            <li class="nav-item">
-              <a class="nav-link" href="/viewusers">View Users</a>
-            </li> 
+            
           </ul>
         </div>
       </div>
@@ -69,3 +71,15 @@
     </tbody>
   </table>
 </div>
+  <script>
+  document.getElementById('searchInput').addEventListener('keyup', function() {
+    var filter = this.value.toLowerCase();
+    var rows = document.querySelectorAll('#usersTable tbody tr');
+    rows.forEach(function(row) {
+      var text = row.innerText.toLowerCase();
+      row.style.display = text.includes(filter) ? '' : 'none';
+    });
+  });
+  </script>
+</body>
+</html>
