@@ -157,13 +157,6 @@ app.post('/updateCars/:id', upload.single('image'), (req, res) => {
     );
 });
 
-app.get('/browseCars', checkAuthenticated, (req, res) => {
-    connection.query('SELECT * FROM cars', (error, results) => {
-        if (error) throw error;
-        res.render('browseCars', { user: req.session.user, cars: results });
-    });
-});
-
 app.post('/add-to-cart/:id', checkAuthenticated, (req, res) => {
     const carId = parseInt(req.params.id);
 
