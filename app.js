@@ -157,6 +157,36 @@ app.post('/updateCars/:id', upload.single('image'), (req, res) => {
     );
 });
 
+app.get('/updateUsers/:id', checkAuthenticated, checkAdmin, (req, res) => {
+    const userId = req.params.id;
+    connection.query('SELECT * FROM users WHERE userId = ?', [userId], (error, results) => {
+        if (error) throw error;
+        if (results.length > 0) {
+            res.render('updateUsers', { user: results[0] });
+        } else {
+            res.status(404).send('User not found');
+        }
+    });
+});
+
+app.post('/updateUsers/:id', (req, res) => {
+    const id = req.params.id;
+    const { username, email, address, contact, role } = req.body;
+
+    connection.query(
+        'UPDATE users SET username = ?, email = ?, address = ?, contact = ?, role = ? WHERE userId = ?',
+        [username, email, address, contact, role, id],
+        (err, result) => {
+            if (err) {
+                console.error('Error updating user:', err);
+                return res.status(500).send("Error updating user");
+            }
+            res.redirect('/viewusers');
+        }
+    );
+});
+
+
 
 app.post('/add-to-cart/:id', checkAuthenticated, (req, res) => {
     const carId = parseInt(req.params.id);
@@ -254,6 +284,18 @@ app.get('/deleteCar/:id', (req, res) => {
         if (error) {
             console.error("Error deleting car:", error);
             res.status(500).send('Error deleting car');
+        } else {
+            res.redirect('/inventory');
+        }
+    });
+});
+
+app.get('/deleteUsers/:id', (req, res) => {
+    const userId = req.params.id;
+    connection.query('DELETE FROM users WHERE userId = ?', [userId], (error, results) => {
+        if (error) {
+            console.error("Error deleting user:", error);
+            res.status(500).send('Error deleting user');
         } else {
             res.redirect('/inventory');
         }
