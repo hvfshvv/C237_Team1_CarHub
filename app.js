@@ -297,7 +297,7 @@ app.get('/deleteUsers/:id', (req, res) => {
             console.error("Error deleting user:", error);
             res.status(500).send('Error deleting user');
         } else {
-            res.redirect('/inventory');
+            res.redirect('/viewusers');
         }
     });
 });

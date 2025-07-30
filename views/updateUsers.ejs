@@ -41,8 +41,7 @@
     <h2 class="text-center mb-4">Update user</h2>
     
     <% if (user) { %>
-      <form action="/updateUsers/<%= user.id %>" method="POST" enctype="multipart/form-data" class="mx-auto" style="max-width: 500px;">
-
+      <form method="POST" action="/updateUsers/<%= user.id %>" class="mx-auto" style="max-width: 500px;">
         <div class="mb-3">
           <label for="username" class="form-label">Username</label>
           <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>" required>
@@ -55,8 +54,8 @@
 
         <label>Role:</label><br>
                 <select name="role" required>
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
+                    <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>User</option>
+                    <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Admin</option>
                 </select>
 
         <div class="mb-3">
