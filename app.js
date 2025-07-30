@@ -158,8 +158,8 @@ app.post('/updateCars/:id', upload.single('image'), (req, res) => {
 });
 
 app.get('/updateUsers/:id', checkAuthenticated, checkAdmin, (req, res) => {
-    const userId = req.params.id;
-    connection.query('SELECT * FROM users WHERE userId = ?', [userId], (error, results) => {
+    const id = req.params.id;
+    connection.query('SELECT * FROM users WHERE id = ?', [id], (error, results) => {
         if (error) throw error;
         if (results.length > 0) {
             res.render('updateUsers', { user: results[0] });
@@ -174,7 +174,7 @@ app.post('/updateUsers/:id', (req, res) => {
     const { username, email, address, contact, role } = req.body;
 
     connection.query(
-        'UPDATE users SET username = ?, email = ?, address = ?, contact = ?, role = ? WHERE userId = ?',
+        'UPDATE users SET username = ?, email = ?, address = ?, contact = ?, role = ? WHERE id = ?',
         [username, email, address, contact, role, id],
         (err, result) => {
             if (err) {
@@ -291,8 +291,8 @@ app.get('/deleteCar/:id', (req, res) => {
 });
 
 app.get('/deleteUsers/:id', (req, res) => {
-    const userId = req.params.id;
-    connection.query('DELETE FROM users WHERE userId = ?', [userId], (error, results) => {
+    const Id = req.params.id;
+    connection.query('DELETE FROM users WHERE Id = ?', [Id], (error, results) => {
         if (error) {
             console.error("Error deleting user:", error);
             res.status(500).send('Error deleting user');

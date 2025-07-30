@@ -64,8 +64,8 @@
           <td><%= users[i].role %></td>
           <td><%= users[i].address %></td>
           <td><%= users[i].contact %></td>
-          <td><a href="/updateUsers/<%= users[i].userId %>">Edit</a></td>
-          <td><a href="/deleteUsers/<%= users[i].userId %>" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
+          <td><a href="/updateUsers/<%= users[i].id %>">Edit</a></td>
+          <td><a href="/deleteUsers/<%= users[i].id %>" onclick="return confirm('Are you sure you want to delete this user?')">Delete</a></td>
         </tr>
       <% } %>
     </tbody>
