@@ -54,11 +54,11 @@
 
           </tr>
       </thead>
-      <tbody>
+            <tbody>
         <% for(let i = 0; i < cars.length; i++) { %>
           <tr>
-            <td><%a href="/car/<%= cars[i].carId %>"><%= cars[i].carModel %></a></td>
-            <td><%img src="images/<%= cars[i].image %>" width="80%"></td>
+            <td><a href="/car/<%= cars[i].carId %>"><%= cars[i].carModel %></a></td>
+            <td><img src="images/<%= cars[i].image %>" width="80%"></td>
             <td><%= cars[i].Year %></td>
             <td><%= cars[i].price.toFixed(2) %></td>
             <td><%= cars[i].description %></td>
@@ -72,7 +72,6 @@
           </tr>
         <% } %>
       </tbody>
-
     </table>
   </div>
   <script>

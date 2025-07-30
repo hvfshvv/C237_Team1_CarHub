@@ -310,5 +310,12 @@ app.get('/product', checkAuthenticated, (req, res) => {
 });
 
 
+app.get('/viewusers', checkAuthenticated, checkAdmin, (req, res) => {
+    connection.query('SELECT * FROM users', (error, results) => {
+        if (error) throw error;
+        res.render('viewusers', { users: results, user: req.session.user });
+    });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`CarHub running on port ${PORT}`));
