@@ -290,17 +290,7 @@ app.get('/deleteCar/:id', (req, res) => {
     });
 });
 
-app.get('/deleteUsers/:id', (req, res) => {
-    const userId = req.params.id;
-    connection.query('DELETE FROM users WHERE userId = ?', [userId], (error, results) => {
-        if (error) {
-            console.error("Error deleting user:", error);
-            res.status(500).send('Error deleting user');
-        } else {
-            res.redirect('/inventory');
-        }
-    });
-});
+
 
 app.get('/product', checkAuthenticated, (req, res) => {
     connection.query('SELECT * FROM cars', (error, results) => {
